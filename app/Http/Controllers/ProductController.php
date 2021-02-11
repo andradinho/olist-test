@@ -39,6 +39,6 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return 204;
+        return response()->json([], 204);
     }
 }

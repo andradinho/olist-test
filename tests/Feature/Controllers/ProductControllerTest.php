@@ -64,25 +64,12 @@ class ProductControllerTest extends TestCase
         $this->assertDatabaseHas('products', ['name' => $newProduct['name']]);
     }
 
-    public function testUpdatingProductPrice()
-    {
-        $product = Product::factory()->create();
-
-        $newProduct = $product->toArray();
-        $newProduct['price'] = 25;
-
-        $response = $this->put("/api/products/{$product->id}", $newProduct);
-        $response->assertStatus(200);
-
-        $this->assertDatabaseHas('products', ['price' => $newProduct['price']]);
-    }
-
     public function testDestroyProduct()
     {
         $product = Product::factory()->create();
 
         $response = $this->delete("/api/products/{$product->id}");
-        $response->assertStatus(200);
+        $response->assertStatus(204);
 
         $this->assertDatabaseMissing('products', $product->toArray());
     }
