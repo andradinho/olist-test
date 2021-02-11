@@ -50,4 +50,30 @@ class ProductControllerTest extends TestCase
 
         $this->assertDatabaseHas('products', $newProduct);
     }
+
+    public function testUpdatingProductName()
+    {
+        $product = Product::factory()->create();
+
+        $newProduct = $product->toArray();
+        $newProduct['name'] = 'New Product';
+
+        $response = $this->put("/api/products/{$product->id}", $newProduct);
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('products', ['name' => $newProduct['name']]);
+    }
+
+    public function testUpdatingProductPrice()
+    {
+        $product = Product::factory()->create();
+
+        $newProduct = $product->toArray();
+        $newProduct['price'] = 25;
+
+        $response = $this->put("/api/products/{$product->id}", $newProduct);
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('products', ['price' => $newProduct['price']]);
+    }
 }
