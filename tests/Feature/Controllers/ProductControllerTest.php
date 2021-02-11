@@ -76,4 +76,14 @@ class ProductControllerTest extends TestCase
 
         $this->assertDatabaseHas('products', ['price' => $newProduct['price']]);
     }
+
+    public function testDestroyProduct()
+    {
+        $product = Product::factory()->create();
+
+        $response = $this->delete("/api/products/{$product->id}");
+        $response->assertStatus(200);
+
+        $this->assertDatabaseMissing('products', $product->toArray());
+    }
 }
